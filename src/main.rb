@@ -27,14 +27,16 @@ class Main
       get
     when "remove"
       remove
-    when "clear"
-      clear
+    when "list"
+      list
     end
 
     PasswordFile.write(@encryptor.encrypt(@key_manager.passwords_json))
   rescue RuntimeError => error_message
     puts(error_message)
   end
+
+  private
 
   def add
     if @options[:specify_password]
@@ -57,6 +59,10 @@ class Main
 
   def remove
     @key_manager.remove_password(@options[:key])
+  end
+
+  def list
+    puts(["Known keys:", *@key_manager.all_keys].join("\n  * "))
   end
 
   def clear_clipboard

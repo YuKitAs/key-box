@@ -34,6 +34,10 @@ class KeyManager
     return @existing_passwords[key]
   end
 
+  def all_keys
+    return @existing_passwords.keys.sort
+  end
+
   def passwords_json
     return JSON.generate(@existing_passwords)
   end
