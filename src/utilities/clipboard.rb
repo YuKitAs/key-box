@@ -5,7 +5,7 @@ class Clipboard
     if !(/linux/ =~ RUBY_PLATFORM).nil?
       Open3.popen3("xclip -selection clipboard"){|input, _, _| input << content}
     elsif !(/darwin/ =~ RUBY_PLATFORM).nil?
-      `echo '#{content}' | pbcopy`
+      `printf '#{content}' | pbcopy`
     end
   end
 end

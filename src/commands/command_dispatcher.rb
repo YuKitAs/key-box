@@ -1,24 +1,22 @@
+require "utilities/password_file"
 require "utilities/clipboard"
 
 require "commands/add"
 require "commands/list"
 require "commands/get"
 require "commands/remove"
+require "commands/merge"
 
 class CommandDispatcher
   include Add
   include List
   include Get
   include Remove
+  include Merge
 
-  def initialize(key_manager)
+  def initialize(key_manager, encryptor)
     @key_manager = key_manager
-  end
-
-  def fetch(args)
-  end
-
-  def push(args)
+    @encryptor = encryptor
   end
 
   def dispatch(argv)

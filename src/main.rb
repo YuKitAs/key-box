@@ -1,27 +1,57 @@
 require_relative "./initialize"
+
+require "utilities/clipboard"
 require "utilities/encryptor"
-require "utilities/password_file"
 require "utilities/key_manager"
-require "commands/command_dispatcher"
+require "utilities/password_file"
+
+require "commands/add"
+require "commands/list"
+require "commands/get"
+require "commands/remove"
+require "commands/merge"
+
 require "io/console"
 
 class Main
+  include Add
+  include List
+  include Get
+  include Remove
+  include Merge
+
   def run
     print("Please input key-box password: ")
     password = STDIN.noecho(&:gets).chomp
     puts
 
-    PasswordFile.write(@encryptor.encrypt("{}")) unless PasswordFile.exist?
-
     @encryptor = Encryptor.new(password)
-
+    create_password_file unless PasswordFile.exist?
     @key_manager = KeyManager.new(@encryptor.decrypt(PasswordFile.read))
 
-    CommandDispatcher.new(@key_manager).dispatch(ARGV)
+    dispatch(ARGV)
 
     PasswordFile.write(@encryptor.encrypt(@key_manager.passwords_json))
   rescue RuntimeError => error_message
     puts(error_message)
+  end
+
+  private
+
+  def create_password_file
+    PasswordFile.write(@encryptor.encrypt("{}"))
+  end
+
+  def dispatch(argv)
+    argv_copy = Marshal.load(Marshal.dump(argv))
+    command = argv_copy.shift
+    public_send(command, argv_copy)
+  end
+
+  def clear_clipboard
+    print("Press enter to clear clipboard")
+    STDIN.gets.chomp
+    Clipboard.copy("")
   end
 end
 
