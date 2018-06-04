@@ -15,7 +15,7 @@ module Merge
 
         if ["Y", "y"].include?(answer)
           @key_manager.remove_password(key)
-          @key_manager.add_password(password)
+          @key_manager.add_password(key, password)
         end
       end
     end
