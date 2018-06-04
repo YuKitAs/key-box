@@ -5,6 +5,7 @@ require "commands/add"
 require "commands/list"
 require "commands/get"
 require "commands/remove"
+require "commands/rename"
 require "commands/merge"
 
 class CommandDispatcher
@@ -12,6 +13,7 @@ class CommandDispatcher
   include List
   include Get
   include Remove
+  include Rename
   include Merge
 
   def initialize(key_manager, encryptor)
