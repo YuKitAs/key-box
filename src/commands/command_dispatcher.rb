@@ -28,8 +28,9 @@ class CommandDispatcher
   end
 
   def clear_clipboard
-    print("Press enter to clear clipboard")
-    STDIN.gets.chomp
-    Clipboard.copy("")
+    puts("Password are stored in the clipboard for next 15 seconds")
+    sleep(15)
+    Clipboard.clear
+    puts("Clipboard cleared")
   end
 end

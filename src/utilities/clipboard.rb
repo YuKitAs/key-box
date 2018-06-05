@@ -8,4 +8,8 @@ class Clipboard
       `printf '%s' '#{content}' | pbcopy`
     end
   end
+
+  def self.clear
+    copy("")
+  end
 end
