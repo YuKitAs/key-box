@@ -1,13 +1,19 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <h2>Hello world!</h2>
+    <input v-model="keyword">
+    <div>{{ keyword }}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      keyword: ''
+    }
+  }
 }
 </script>
 
