@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import fontawesome from '@fortawesome/fontawesome'
+import { faPencilAlt, faTrashAlt } from '@fortawesome/fontawesome-free-solid'
+
+fontawesome.library.add(faPencilAlt, faTrashAlt)
 
 Vue.config.productionTip = false
 
