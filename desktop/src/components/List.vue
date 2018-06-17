@@ -1,5 +1,6 @@
 <template>
   <div id="list">
+    <input v-model="keyword" placeholder="search...">
     <table>
       <tbody>
         <tr v-for="item in list" :key="item">
@@ -20,6 +21,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 export default {
   data() {
     return {
+      keyword: '',
       list: ['foo', 'bar', 'baz', 'qux']
     }
   },

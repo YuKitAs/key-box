@@ -1,27 +1,13 @@
 <template>
   <div id="app">
     <h2>Key Box</h2>
-    <input v-model="keyword" placeholder="search...">
-    <div>{{ keyword }}</div>
-    <list/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import List from '@/components/List'
-
 export default {
-  name: 'App',
-
-  data() {
-    return {
-      keyword: ''
-    }
-  },
-
-  components: {
-    List
-  }
+  name: 'App'
 }
 </script>
 
