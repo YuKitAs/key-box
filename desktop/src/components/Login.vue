@@ -2,7 +2,7 @@
   <div id="login">
     <input :type="passwordType" v-model="password" placeholder="Password">
     <span><font-awesome-icon :icon="visibilityIcon" @click="switchVisibility()"/></span>
-    <div><router-link to="/list" tag="button">Login</router-link></div>
+    <div><button class="btn btn-login" @click="verifyPassword()">Login</button></div>
   </div>
 </template>
 
@@ -22,6 +22,12 @@ export default {
     switchVisibility() {
       this.passwordType = this.passwordType === 'password' ? 'text' : 'password'
       this.visibilityIcon = this.visibilityIcon === 'eye' ? 'eye-slash' : 'eye'
+    },
+
+    verifyPassword() {
+      if (this.password === 'n0password') {
+        this.$router.replace('/list')
+      }
     }
   },
 
@@ -31,13 +37,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 input {
   width: 100px;
   margin-top: 10px;
 }
 
-button {
+.btn-login {
   margin-top: 20px;
 }
 
