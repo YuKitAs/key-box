@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
 
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
@@ -55,7 +55,7 @@ Metrics/ClassLength:
 Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/LineLength:
-  Max: 80
+  Max: 120
 Metrics/MethodLength:
   Max: 40
 Metrics/ModuleLength:
@@ -102,22 +102,6 @@ Style/ImplicitRuntimeError:
   Enabled: true
 Style/Lambda:
   EnforcedStyle: literal
-Style/MethodCallWithArgsParentheses:
-  Enabled: true
-  IgnoredMethods:
-    - attribute
-    - component
-    - require
-    - require_relative
-    - describe
-    - define
-    - before
-    - after
-    - it
-    - to
-    - not_to
-    - be
-    - eq
 Style/PreferredHashMethods:
   EnforcedStyle: verbose
 Style/RedundantException:

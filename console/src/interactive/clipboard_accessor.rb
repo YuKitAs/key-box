@@ -1,6 +1,6 @@
 require "open3"
 
-class Clipboard
+class ClipboardAccessor
   def self.copy(content)
     if !(/linux/ =~ RUBY_PLATFORM).nil?
       Open3.popen3("xclip -selection clipboard"){|input, _, _| input << content}

@@ -2,6 +2,8 @@ require "openssl"
 require "digest/sha2"
 require "base64"
 
+require "core/errors/encrypting_error"
+
 class Encryptor
   ALGORITHM = "AES-256-CBC".freeze
 
@@ -30,6 +32,6 @@ class Encryptor
 
     return aes_decipher.update(content) + aes_decipher.final
   rescue OpenSSL::Cipher::CipherError
-    raise(RuntimeError, "Error: incorrect key-box password")
+    raise(EncryptingError, "Incorrect key-box password.")
   end
 end

@@ -1,0 +1,1 @@
+class KeyManagementError < RuntimeError; end
