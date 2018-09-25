@@ -1,1 +1,0 @@
-class EncryptingError < RuntimeError; end
