@@ -1,17 +1,41 @@
 <template>
   <div id="list">
     <input v-model="keyword" placeholder="search...">
-    <div ref="addButton" class="btn btn-add" @click="addKey()"><font-awesome-icon icon="plus"/></div>
+    <div ref="addButton" class="btn btn-add" @click="addItem()">
+      <font-awesome-icon icon="plus"/>
+    </div>
     <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>URL</th>
+        <th>User</th>
+        <th>Key</th>
+        <th>Description</th>
+      </tr>
+      </thead>
       <tbody>
-        <tr v-for="item in list" :key="item.id">
-          <td class="items"><input ref="keyInput" class="key" v-model="item.key" :disabled="!isEditing(editingId, item.id)"></td>
-          <td class="actions">
-              <span class="btn btn-edit" @click="editKey(item.id)" :hidden="isEditing(editingId, item.id)"><font-awesome-icon icon="pencil-alt"/></span>
-              <span class="btn btn-confirm" @click="saveKey(item.key)" :hidden="!isEditing(editingId, item.id)"><font-awesome-icon icon="check"/></span>
-              <span class="btn btn-delete" @click="deleteKey(item.id)" :hidden="isEditing(editingId, item.id)"><font-awesome-icon icon="trash-alt"/></span>
-          </td>
-        </tr>
+      <tr v-for="item in list" :key="item.name">
+        <td class="items"><input ref="nameInput" class="input-field" v-model="item.name"
+                                 :disabled="!isEditing(editingItem, item.name)"></td>
+        <td class="items"><input ref="urlInput" class="input-field" v-model="item.url"
+                                 :disabled="!isEditing(editingItem, item.name)"></td>
+        <td class="items"><input ref="userInput" class="input-field" v-model="item.user"
+                                 :disabled="!isEditing(editingItem, item.name)"></td>
+        <td class="items"><input ref="keyInput" class="input-field" v-model="item.key"
+                                 :disabled="!isEditing(editingItem, item.name)"></td>
+        <td class="items"><input ref="descInput" class="input-field" v-model="item.description"
+                                 :disabled="!isEditing(editingItem, item.name)"></td>
+        <td class="actions">
+          <span class="btn btn-edit" @click="editItem(item.name)" :hidden="isEditing(editingItem, item.name)"><font-awesome-icon
+            icon="pencil-alt"/></span>
+          <span class="btn btn-confirm" @click="saveItem(item.name, item.url, item.user, item.key, item.description)"
+                :hidden="!isEditing(editingItem, item.name)"><font-awesome-icon
+            icon="check"/></span>
+          <span class="btn btn-delete" @click="deleteItem(item.name)" :hidden="isEditing(editingItem, item.name)"><font-awesome-icon
+            icon="trash-alt"/></span>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
@@ -24,30 +48,42 @@ export default {
   data() {
     return {
       keyword: '',
-      list: [{'key': 'foo', 'id': 0}, {'key': 'bar', 'id': 1}, {'key': 'baz', 'id': '2'}],
-      editingId: null
+      list: [{
+        'name': 'foo',
+        'url': 'example.com/dummy1',
+        'user': 'dummy1',
+        'key': 'key1',
+        'description': 'random'
+      }, {
+        'name': 'bar',
+        'url': 'example.com/dummy2',
+        'user': 'dummy2',
+        'key': 'key2',
+        'description': 'random'
+      }],
+      editingItem: null
     }
   },
 
   methods: {
-    addKey() {
-      this.list.push({'key': 'qux', 'id': Math.floor((Math.random() * 100) + 1)})
+    addItem() {
+      console.log('add button clicked')
     },
 
-    editKey(id) {
-      this.editingId = id
+    editItem(name) {
+      this.editingItem = name
     },
 
-    isEditing(editingId, id) {
-      return editingId === id
+    isEditing(editingItem, name) {
+      return editingItem === name
     },
 
-    saveKey(key) {
-      this.editingId = null
+    saveItem() {
+      this.editingItem = null
     },
 
-    deleteKey(id) {
-      let index = this.list.findIndex(e => e['id'] === id)
+    deleteItem(name) {
+      let index = this.list.findIndex(e => e['name'] === name)
 
       if (index !== -1) {
         this.list.splice(index, 1)
@@ -62,48 +98,47 @@ export default {
 </script>
 
 <style scoped>
-.btn {
-  cursor: pointer;
-}
+  table {
+    margin: 20px;
+    border-radius: 3px;
+    background-color: white;
+    opacity: .9;
+    font-weight: 600;
+    font-size: 14px;
+  }
 
-.btn-add {
-  position: fixed;
-  right: 10%;
-  bottom: 5%;
-  z-index: 1;
-}
+  td {
+    padding: 10px;
+  }
 
-.btn-delete {
-  margin-left: 10px;
-}
+  .items {
+    text-align: left;
+  }
 
-table {
-  width: 80%;
-  margin: 20px auto;
-  border-radius: 3px;
-  background-color: white;
-  opacity: .9;
-  font-weight: 600;
-  font-size: 14px;
-}
+  .input-field {
+    border: none;
+    background-color: transparent;
+  }
 
-td {
-  padding: 10px;
-}
+  .actions {
+    width: 30%;
+    text-align: right;
+    display: inline-flex;
+    justify-content: space-around;
+  }
 
-.items {
-  text-align: left;
-}
+  .btn {
+    cursor: pointer;
+  }
 
-.key {
-  border: none;
-  background-color: transparent;
-}
+  .btn-add {
+    position: fixed;
+    right: 10%;
+    bottom: 5%;
+    z-index: 1;
+  }
 
-.actions {
-  width: 30%;
-  text-align: right;
-  display: inline-flex;
-  justify-content: space-around;
-}
+  .btn-delete {
+    margin-left: 10px;
+  }
 </style>
